@@ -38,4 +38,5 @@ NSS | PINK | GPIO5
 MISO | GREY | GPIO19
 RST | YELLOW | GPIO2
 
+[Wiring and more](https://www.circuitstate.com/tutorials/interfacing-ra-01-ra-02-sx1278-lora-modules-with-esp32-using-arduino/)
 [Sample code](https://how2electronics.com/esp32-lora-sx1278-76-transmitter-receiver/)
