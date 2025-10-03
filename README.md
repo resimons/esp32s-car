@@ -11,7 +11,7 @@ The ESP will read the data from the sensor and puts it on the LCD display.
 
 ## Where to buy
 
-[ESP-32S](https://www.hobbyelectronica.nl/product/nodemcu-esp32-wifi-bluetooth-dual-core/)
+[ESP-32S](https://elektronicavoorjou.nl/product/esp32-development-board-wifi-bluetooth)
 [BME280](https://www.tinytronics.nl/nl/sensoren/lucht/druk/bme280-digitale-barometer-druk-en-vochtigheid-sensor-module)
 
 ## How to connect BME280 and LCD display to ESP32
