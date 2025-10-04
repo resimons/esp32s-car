@@ -1,4 +1,4 @@
-# Connect a BME280 to a ESP 32S
+# Connect a BME280 to a ESP 32S with LoRa SX1278 Module RA-02
 
 The ESP will read the data from the sensor and puts it on the LCD display.
 
