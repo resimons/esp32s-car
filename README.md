@@ -1,4 +1,4 @@
-# Connect a BME280 to a ESP 32S with LoRa SX1278 Module RA-02
+# Connect a BME280 to a ESP 32S with LoRa SX1278 Module RA-02 and led segments TM1637 and LCD display
 
 The ESP will read the data from the sensor and puts it on the LCD display.
 
@@ -6,6 +6,8 @@ The ESP will read the data from the sensor and puts it on the LCD display.
 
 ![image](https://github.com/resimons/esp32s-nodecmu-lora-bme280/blob/main/images/esp32-esp-32s-nodemcu-pinout.jpg)
 ![image](https://github.com/resimons/esp32s-nodecmu-lora-bme280/blob/main/images/bme280.jpeg)
+![image](https://www.tinytronics.nl/image/cache/data/product-2368/TM1637-RED4MINI-1200x1200w.jpg)
+![image](https://www.tinytronics.nl/image/cache/data/product-3267/LCD1602-green-yellow-with-I2C-backpack-1500x1500w.jpg)
 
 ## Wiring
 
@@ -13,6 +15,8 @@ The ESP will read the data from the sensor and puts it on the LCD display.
 
 [ESP-32S](https://elektronicavoorjou.nl/product/esp32-development-board-wifi-bluetooth)
 [BME280](https://www.tinytronics.nl/nl/sensoren/lucht/druk/bme280-digitale-barometer-druk-en-vochtigheid-sensor-module)
+[TM1637](https://www.tinytronics.nl/nl/displays/segmenten/segmenten-display-module-4-karakters-klok-rood-tm1637-mini)
+[LCD-display](https://www.tinytronics.nl/nl/displays/lcd/lcd-display-16*2-karakters-met-zwarte-tekst-en-groen-gele-backlight-met-i2c-backpack)
 
 ## How to connect BME280 and LCD display to ESP32
 COMPONENT | COLOUR | ESP
@@ -40,3 +44,13 @@ RST | YELLOW | GPIO2
 
 [Wiring and more](https://www.circuitstate.com/tutorials/interfacing-ra-01-ra-02-sx1278-lora-modules-with-esp32-using-arduino/)
 [Sample code](https://how2electronics.com/esp32-lora-sx1278-76-transmitter-receiver/)
+
+## Wiring VMA425 with TM1637 driver
+VMA425 | COLOR | ESP32
+-------- |-| ----------
+5V | RED | 5V
+GND | BLACK | GND
+CLK | YELLOW | GPIO25
+DI0 | ORANGE | GPIO26
+
+[Info](https://cdn.velleman.eu/downloads/29/vma425_a4v01.pdf)
