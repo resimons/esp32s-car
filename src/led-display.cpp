@@ -29,8 +29,6 @@ void showDegrees(float f, uint8_t brightness) {
     int length = 1 + abs(value / 10);
     int position = 3 - length;
 
-    Serial.println("f=" + String(f) + " round=" + round + " position=" + position + " length=" + length);
-
     display.setBrightness(brightness);
     display.clear();
     display.showNumberDec(value, false, length, position);
