@@ -33,7 +33,7 @@ BME280 SDA | YELLOW | GPIO21
 ## Wiring LoRa SX1278 module with ESP32
 SX1278 | COLOR | ESP32
 -------- |-| ----------
-3.3V | RED | 3.3V
+VCC | RED | 3.3V
 GND | BLACK | GND
 SCK | ORANGE | GPIO18
 MOSI | WHITE | GPIO23
@@ -48,9 +48,17 @@ RST | YELLOW | GPIO2
 ## Wiring VMA425 with TM1637 driver
 VMA425 | COLOR | ESP32
 -------- |-| ----------
-5V | RED | 5V
+VCC | RED | 3.3V
 GND | BLACK | GND
 CLK | YELLOW | GPIO25
 DI0 | ORANGE | GPIO26
 
 [Info](https://cdn.velleman.eu/downloads/29/vma425_a4v01.pdf)
+
+## Wiring LCD display
+LCD | COLOR | ESP
+----- | - | ------
+VCC | ORANGE | 5V
+GND | BLUE | GND
+SDA | YELLOW | GPIO21
+SCL | GREY | GPIO22
