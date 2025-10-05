@@ -18,7 +18,7 @@ The ESP will read the data from the sensor and puts it on the LCD display.
 [TM1637](https://www.tinytronics.nl/nl/displays/segmenten/segmenten-display-module-4-karakters-klok-rood-tm1637-mini)
 [LCD-display](https://www.tinytronics.nl/nl/displays/lcd/lcd-display-16*2-karakters-met-zwarte-tekst-en-groen-gele-backlight-met-i2c-backpack)
 
-## How to connect BME280 and LCD display to ESP32
+## How to connect BME280 to ESP32
 COMPONENT | COLOUR | ESP
 ------------ | ---------- | -------------
 BME280 VCC | RED | 3.3V
