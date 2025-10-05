@@ -45,7 +45,7 @@ RST | YELLOW | GPIO2
 [Wiring and more](https://www.circuitstate.com/tutorials/interfacing-ra-01-ra-02-sx1278-lora-modules-with-esp32-using-arduino/)
 [Sample code](https://how2electronics.com/esp32-lora-sx1278-76-transmitter-receiver/)
 
-## Wiring VMA425 with TM1637 driver
+## Wiring TM1637
 VMA425 | COLOR | ESP32
 -------- |-| ----------
 VCC | RED | 3.3V
