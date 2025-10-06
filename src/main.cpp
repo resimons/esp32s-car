@@ -98,7 +98,7 @@ void loop()
     displayAndSendBmeValues();
 
     // The sensor should be read every 60 seconds when in Forced mode, according to the datasheet and Adafruit library
-    delay(60000);
+    showSpinner(30000);
 }
 
 void displayAndSendBmeValues() {
@@ -141,7 +141,7 @@ void displayAndSendBmeValues() {
     lcd.print("Hum:   " + humidity + "%");
     delay(2500);
     lcd.setBacklight(LOW); // Set backlight to off
-    showDegrees(bme.readTemperature(), 0x00);
+    // showDegrees(bme.readTemperature(), 0x00);
 }
 
 void publish_alive() {

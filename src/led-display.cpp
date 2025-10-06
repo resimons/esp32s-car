@@ -15,6 +15,20 @@ const uint8_t SEG_DONE[] = {
 	SEG_A | SEG_D | SEG_E | SEG_F | SEG_G            // E
 	};
 
+const uint8_t SPIN[] = {
+    SEG_A | SEG_B | SEG_G,
+    SEG_B | SEG_G | SEG_F,
+    SEG_G | SEG_F | SEG_A,
+    SEG_F | SEG_A | SEG_B
+};
+
+const uint8_t SPIN2[] = {
+    SEG_A,
+    SEG_B,
+    SEG_G,
+    SEG_F
+};
+
 const uint8_t SEG_DEGREE[] = { SEG_A | SEG_B | SEG_F | SEG_G };
 const uint8_t MINUS[] = { SEG_G };
 
@@ -39,9 +53,32 @@ void showDegrees(float f, uint8_t brightness) {
     }
 }
 
+void showSpinner(int len) {
+    if (len == 0) {
+        return;
+    }
+    display.setBrightness(6);
+    display.clear();
+    int start = millis();
+    int end = start + abs(len);
+    while (millis() < end) {
+        for (int k = 0; k < 4; k++) {
+            display.setSegments(&SPIN[k], 1, 3);
+            delay(150);
+        }
+    }
+}
+
 void testLedSegments()
 {
-
+    display.setBrightness(6);
+    display.clear();
+    while (true) {
+        for (int k = 0; k < 4; k++) {
+            display.setSegments(&SPIN[k], 1, 3);
+            delay(125);
+        }
+    }
 
   int k;
   uint8_t data[] = { 0xff, 0xff, 0xff, 0xff };
