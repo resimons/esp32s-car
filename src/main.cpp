@@ -3,6 +3,7 @@
 #include "led-display.h"
 #include <LiquidCrystal_I2C.h>
 #include <IRremote.hpp>
+#include "ir-commands.h"
 
 
 char ssid[23];
@@ -40,7 +41,6 @@ void setup() {
 
   lcd.clear();
   lcd.setCursor(0,0); // Move cursor to 0
-  lcd.print("LoRa found");
   delay(2500);
 
   publish_alive();
@@ -53,11 +53,26 @@ void sendMessage(String outgoing);
 
 void loop()
 {
-    if (IrReceiver.decode()) {
-        uint16_t command = IrReceiver.decodedIRData.command;
-        Serial.println(command);
-        delay(100);  // wait a bit
-        IrReceiver.resume();
+  if (IrReceiver.decode()) {
+      uint16_t command = IrReceiver.decodedIRData.command;
+      delay(100);  // wait a bit
+      IrReceiver.resume();
+
+      switch(command) {
+        case COMMAND_LEFT:
+          lcd.print("LEFT");
+          break;
+        case COMMAND_RIGHT:
+          lcd.print("RIGHT");
+          break;
+        case COMMAND_FORWARD:
+          lcd.print("FORWARD");
+          break;
+        case COMMAND_BACKWARD:
+          lcd.print("BACKWARD");
+          break;
+      }
+
   }
     // // The sensor should be read every 60 seconds when in Forced mode, according to the datasheet and Adafruit library
     // showSpinner(30000);
