@@ -44,12 +44,17 @@ void setup() {
   Serial.println(ssid);
   Serial.println(sMacAddr);
 
+  lcd.clear();
+  lcd.setCursor(0,0); // Move cursor to 0
+  lcd.print("Looking for BME280");
+
   Serial.println("Looking for sensor");
   if (! bme.begin(BME280_ADDRESS_ALTERNATE)) {
     Serial.println("Could not find a valid BME280 sensor, check wiring!");
     while (1);
   }
 
+  lcd.clear();
   lcd.setCursor(0,0); // Move cursor to 0
   lcd.print("BME280 found");
   delay(2500);
