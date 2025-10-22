@@ -4,6 +4,10 @@
 #include <LiquidCrystal_I2C.h>
 #include <IRremote.hpp>
 #include "ir-commands.h"
+#include "config.h"
+#include "wifiCommunication.h"
+#include "mqtt.h"
+
 
 
 char ssid[23];
@@ -39,6 +43,15 @@ void setup() {
   lcd.setCursor(0,0); // Move cursor to 0
   delay(2500);
 
+  wifi_setup();
+  wifi_enable();
+
+  mqtt_setup();
+  mqtt_loop();
+
+  delay(2000);
+
+
   publish_alive();
 
   // testLedSegments();
@@ -49,6 +62,9 @@ void sendMessage(String outgoing);
 
 void loop()
 {
+
+  mqtt_loop();
+  
   if (IrReceiver.decode()) {
       uint16_t command = IrReceiver.decodedIRData.command;
       Serial.println(command);
