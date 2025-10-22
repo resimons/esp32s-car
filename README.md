@@ -5,8 +5,8 @@ The ESP will read the data from the sensor and puts it on the LCD display.
 ## Pin layout ESP32
 
 
-![image](https://github.com/resimons/esp32s-nodecmu-lora-bme280/blob/main/images/esp32-esp-32s-nodemcu-pinout.jpg)
-![image]((https://www.makerguides.com/wp-content/uploads/2020/08/DEBO_IR_38KHZ_01.jpg))
+![image](https://github.com/resimons/esp32s-car/blob/main/images/ESP32-DEV-CH340-USBC-003.jpg)
+![image](https://www.makerguides.com/wp-content/uploads/2020/08/DEBO_IR_38KHZ_01.jpg)
 ![image](https://www.tinytronics.nl/image/cache/data/product-2368/TM1637-RED4MINI-1200x1200w.jpg)
 ![image](https://www.tinytronics.nl/image/cache/data/product-3267/LCD1602-green-yellow-with-I2C-backpack-1500x1500w.jpg)
 
