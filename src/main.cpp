@@ -51,6 +51,7 @@ void loop()
 {
   if (IrReceiver.decode()) {
       uint16_t command = IrReceiver.decodedIRData.command;
+      Serial.println(command);
       delay(100);  // wait a bit
       IrReceiver.resume();
 
