@@ -37,10 +37,6 @@ void setup() {
 
   lcd.clear();
   lcd.setCursor(0,0); // Move cursor to 0
-  lcd.print("Looking for BME280");
-
-  lcd.clear();
-  lcd.setCursor(0,0); // Move cursor to 0
   delay(2500);
 
   publish_alive();
