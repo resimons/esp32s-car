@@ -2,35 +2,26 @@
 #include <WiFi.h>
 #include "led-display.h"
 #include <LiquidCrystal_I2C.h>
-#include <IRremote.hpp>
-#include "ir-commands.h"
 #include "config.h"
 #include "wifiCommunication.h"
 #include "mqtt.h"
-
+#include "engine.h"
 
 
 char ssid[23];
 uint8_t macAddr[6];
 char sMacAddr[18];
 
-void sendMessage(String outgoing);
+void sendMessage(const char *topic, const char *outgoing);
 void publish_alive();
 
 SPIClass spi(VSPI);
-LiquidCrystal_I2C lcd(0x27 /* I2C address */, 16 /* number of digits in a row */, 2 /* number of rows */);
 
 void setup() {
   Serial.begin(115200);
   Serial.setDebugOutput(true);
 
   Wire.begin(SDA, SCL);
-
-  IrReceiver.begin(GPIO_NUM_15, ENABLE_LED_FEEDBACK);  
-
-  lcd.init();                      // initialize the lcd 
-  lcd.setBacklight(HIGH); //Set Back light turn On
-  lcd.setCursor(0,0); // Move cursor to 0
 
    // Get deviceId
   snprintf(ssid, 23, "MCUDEVICE-%llX", ESP.getEfuseMac());
@@ -39,56 +30,51 @@ void setup() {
   Serial.println(ssid);
   Serial.println(sMacAddr);
 
-  lcd.clear();
-  lcd.setCursor(0,0); // Move cursor to 0
-  delay(2500);
-
   wifi_setup();
   wifi_enable();
 
   mqtt_setup();
   mqtt_loop();
 
-  delay(2000);
-
-
   publish_alive();
 
-  // testLedSegments();
+  delay(2000);
 
+  setupEngine();
 }
-
-void sendMessage(String outgoing);
 
 void loop()
 {
 
   mqtt_loop();
-  
-  if (IrReceiver.decode()) {
-      uint16_t command = IrReceiver.decodedIRData.command;
-      Serial.println(command);
-      delay(100);  // wait a bit
-      IrReceiver.resume();
 
-      switch(command) {
-        case COMMAND_LEFT:
-          lcd.print("LEFT");
-          break;
-        case COMMAND_RIGHT:
-          lcd.print("RIGHT");
-          break;
-        case COMMAND_FORWARD:
-          lcd.print("FORWARD");
-          break;
-        case COMMAND_BACKWARD:
-          lcd.print("BACKWARD");
-          break;
-      }
+  // moveForward(200, 2000);
+  // stop();
+  //
+  // delay(2000);
+  // moveBackward(125, 2000);
+  // stop();
 
-  }
-    // // The sensor should be read every 60 seconds when in Forced mode, according to the datasheet and Adafruit library
-    // showSpinner(30000);
+  // // Spin counterclockwise in place
+  // pivotLeft(150);
+  // delay(500);
+  // stop();
+  //
+  // // Spin clockwise in place
+  // pivotRight(150);
+  // delay(500);
+  // stop();
+  //
+  // // Gentle left arc (right side is outer/faster)
+  // arcLeft(80, 200);
+  // delay(1000);
+  // stop();
+  //
+  // // Sharp right arc (left side outer, right side nearly stopped)
+  // arcRight(200, 20);
+  // delay(800);
+  // stop();
+  //
 }
 
 void publish_alive() {
@@ -106,8 +92,10 @@ void publish_alive() {
   payload += sMacAddr;
   payload += "\"";
   payload += "}";
-  sendMessage(payload);
+  sendMessage(mqttAliveTopic, payload.c_str());
 }
 
-void sendMessage(String outgoing) {
+void sendMessage(const char *topic, const char *outgoing) {
+  publishMQTTMessage(topic, outgoing);
+  Serial.println(outgoing);
 }
