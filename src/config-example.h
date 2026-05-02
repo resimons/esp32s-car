@@ -12,6 +12,7 @@ const int mqtt_server_port               = 12345;
 const char* const mqttSensorTopic        = "mytopic";
 const char* const mqttAliveTopic         = "topic/iamalive";
 const char* const mqttCommandTopic       = "topic/car/command";
+const char* const mqttStatusTopic        = "topic/car/status";
 
 // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 #define myTimezone                 "Europe/Amsterdam"

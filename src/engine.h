@@ -37,14 +37,23 @@ void wheelRightBackReverse();
 // Flip direction of all wheels keeping their individual speeds
 void reverseAll();
 
-// Increase or decrease every wheel's speed by delta (clamped to 0–255); does not affect the scheduled stop
+// Increase or decrease every wheel's speed by delta; does not affect the scheduled stop
 void adjustSpeed(int delta);
 
+// Non-blocking ramp: step all wheels toward targetSpeed by 1 every stepMs milliseconds
+void rampTo(int targetSpeed, int stepMs);
+
 // Query the tracked speed of a wheel (0–255)
-int wheelLeftBackSpeed();
-int wheelLeftFrontSpeed();
-int wheelRightFrontSpeed();
-int wheelRightBackSpeed();
+int  wheelLeftBackSpeed();
+int  wheelLeftFrontSpeed();
+int  wheelRightFrontSpeed();
+int  wheelRightBackSpeed();
+
+// Query the tracked direction of a wheel
+bool wheelLeftBackIsForward();
+bool wheelLeftFrontIsForward();
+bool wheelRightFrontIsForward();
+bool wheelRightBackIsForward();
 
 // Pivot in place: left side backward, right side forward (or vice versa) at equal speed
 void pivotLeft(int speed);
