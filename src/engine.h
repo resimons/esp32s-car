@@ -15,6 +15,8 @@
 #define WheelRightBackMovingBackward  GPIO_NUM_33  // Motor D INB
 
 void setupEngine();
+void engine_loop();
+void scheduleStop(int duration);
 
 // Per-wheel direction control (speed: 0–255)
 void wheelLeftBackForward(int speed);
@@ -34,6 +36,9 @@ void wheelRightBackReverse();
 
 // Flip direction of all wheels keeping their individual speeds
 void reverseAll();
+
+// Increase or decrease every wheel's speed by delta (clamped to 0–255); does not affect the scheduled stop
+void adjustSpeed(int delta);
 
 // Query the tracked speed of a wheel (0–255)
 int wheelLeftBackSpeed();

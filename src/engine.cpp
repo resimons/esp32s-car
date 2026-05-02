@@ -19,7 +19,26 @@ static const int LEFT_FRONT  = 1;
 static const int RIGHT_FRONT = 2;
 static const int RIGHT_BACK  = 3;
 
+static unsigned long stopAt = 0;  // millis() deadline for auto-stop; 0 = none
+
+void engine_loop() {
+    if (stopAt > 0 && millis() >= stopAt) {
+        stopAt = 0;
+        stop();
+    }
+}
+
+void scheduleStop(int duration) {
+    stopAt = millis() + (unsigned long)duration;
+}
+
 static void applyWheel(WheelState& w) {
+    // Actually, it can't run at speed lower than 80
+    if (w.speed < 80) {
+        w.speed = 80;
+    } else if (w.speed > 255) {
+        w.speed = 255;
+    }
     if (w.isForward) {
         Serial.printf("Forward:  Wheel %d: %d\r\n", w.forwardPin, w.speed);
         analogWrite(w.backwardPin, 0);
@@ -76,12 +95,20 @@ void reverseAll() {
     }
 }
 
+void adjustSpeed(int delta) {
+    for (auto& w : wheels) {
+        w.speed = constrain(w.speed + delta, 0, 255);
+        applyWheel(w);
+    }
+}
+
 int wheelLeftBackSpeed()   { return wheels[LEFT_BACK].speed; }
 int wheelLeftFrontSpeed()  { return wheels[LEFT_FRONT].speed; }
 int wheelRightFrontSpeed() { return wheels[RIGHT_FRONT].speed; }
 int wheelRightBackSpeed()  { return wheels[RIGHT_BACK].speed; }
 
 void pivotLeft(int speed) {
+    stopAt = 0;
     wheelLeftBackBackward(speed);
     wheelLeftFrontBackward(speed);
     wheelRightFrontForward(speed);
@@ -89,6 +116,7 @@ void pivotLeft(int speed) {
 }
 
 void pivotRight(int speed) {
+    stopAt = 0;
     wheelLeftBackForward(speed);
     wheelLeftFrontForward(speed);
     wheelRightFrontBackward(speed);
@@ -96,6 +124,7 @@ void pivotRight(int speed) {
 }
 
 void arcLeft(int innerSpeed, int outerSpeed) {
+    stopAt = 0;
     wheelLeftBackForward(innerSpeed);
     wheelLeftFrontForward(innerSpeed);
     wheelRightFrontForward(outerSpeed);
@@ -103,6 +132,7 @@ void arcLeft(int innerSpeed, int outerSpeed) {
 }
 
 void arcRight(int innerSpeed, int outerSpeed) {
+    stopAt = 0;
     wheelLeftBackForward(outerSpeed);
     wheelLeftFrontForward(outerSpeed);
     wheelRightFrontForward(innerSpeed);
@@ -111,24 +141,27 @@ void arcRight(int innerSpeed, int outerSpeed) {
 
 void moveForward(int speed, int time) {
     Serial.println("Moving Forward");
+    stopAt = 0;
     wheelLeftBackForward(speed);
     wheelLeftFrontForward(speed);
     wheelRightFrontForward(speed);
     wheelRightBackForward(speed);
-    delay(time);
+    if (time > 0) scheduleStop(time);
 }
 
 void moveBackward(int speed, int time) {
     Serial.println("Moving Backward");
+    stopAt = 0;
     wheelLeftBackBackward(speed);
     wheelLeftFrontBackward(speed);
     wheelRightFrontBackward(speed);
     wheelRightBackBackward(speed);
-    delay(time);
+    if (time > 0) scheduleStop(time);
 }
 
 void stop() {
     Serial.println("Stopping");
+    stopAt = 0;
     for (auto& w : wheels) {
         w.speed = 0;
         analogWrite(w.forwardPin,  0);

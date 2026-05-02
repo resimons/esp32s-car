@@ -116,6 +116,9 @@ void handleCommand(const String& command, int speed, int duration) {
     arcLeft(speed / 2, speed);
   } else if (command == "arcRight") {
     arcRight(speed / 2, speed);
+  } else if (command == "adjustSpeed") {
+    adjustSpeed(speed);
+    return;
   } else if (command == "reverseAll") {
     reverseAll();
     return;
@@ -127,10 +130,7 @@ void handleCommand(const String& command, int speed, int duration) {
     return;
   }
 
-  if (duration > 0) {
-    delay(duration);
-    stop();
-  }
+  if (duration > 0) scheduleStop(duration);
 }
 
 void messageReceived(String &topic, String &payload) {

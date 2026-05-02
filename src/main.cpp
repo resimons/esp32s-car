@@ -47,34 +47,8 @@ void loop()
 {
 
   mqtt_loop();
+  engine_loop();
 
-  // moveForward(200, 2000);
-  // stop();
-  //
-  // delay(2000);
-  // moveBackward(125, 2000);
-  // stop();
-
-  // // Spin counterclockwise in place
-  // pivotLeft(150);
-  // delay(500);
-  // stop();
-  //
-  // // Spin clockwise in place
-  // pivotRight(150);
-  // delay(500);
-  // stop();
-  //
-  // // Gentle left arc (right side is outer/faster)
-  // arcLeft(80, 200);
-  // delay(1000);
-  // stop();
-  //
-  // // Sharp right arc (left side outer, right side nearly stopped)
-  // arcRight(200, 20);
-  // delay(800);
-  // stop();
-  //
 }
 
 void publish_alive() {
