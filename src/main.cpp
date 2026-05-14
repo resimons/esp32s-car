@@ -1,12 +1,9 @@
 #include <SPI.h>              // include libraries
 #include <WiFi.h>
-#include "led-display.h"
-#include <LiquidCrystal_I2C.h>
 #include "config.h"
 #include "wifiCommunication.h"
 #include "mqtt.h"
 #include "engine.h"
-
 
 char ssid[23];
 uint8_t macAddr[6];
@@ -20,8 +17,6 @@ SPIClass spi(VSPI);
 void setup() {
   Serial.begin(115200);
   Serial.setDebugOutput(true);
-
-  Wire.begin(SDA, SCL);
 
    // Get deviceId
   snprintf(ssid, 23, "MCUDEVICE-%llX", ESP.getEfuseMac());

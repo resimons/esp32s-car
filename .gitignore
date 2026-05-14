@@ -7,3 +7,6 @@
 /src/config-roels.h
 /src/config-mies.h
 /.idea
+/nodered/data/
+/mosquitto/data/
+/mosquitto/passwd_file
