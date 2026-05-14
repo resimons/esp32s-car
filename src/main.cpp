@@ -1,70 +1,60 @@
-#include <SPI.h>              // include libraries
-#include <WiFi.h>
 #include "config.h"
-#include "wifiCommunication.h"
-#include "mqtt.h"
 #include "engine.h"
+#include <BLEGamepadClient.h>
 
 char ssid[23];
 uint8_t macAddr[6];
 char sMacAddr[18];
 
-void sendMessage(const char *topic, const char *outgoing);
-void publish_alive();
+BLEAutoScan *pAutoScan = BLEGamepadClient::getAutoScan();
 
-SPIClass spi(VSPI);
-
+XboxController controller;
+void onScanStarted() {
+  Serial.println("scan started");
+}
+void onScanStopped() {
+  Serial.println("scan stopped");
+}
+void onConnecting(XboxController &ctrl) {
+  Serial.println("connecting");
+}
+void onConnectionFailed(XboxController &ctrl) {
+  Serial.println("connection failed");
+}
+void onConnected(XboxController &ctrl) {
+  Serial.println("connected");
+}
+void onDisconnected(XboxController &ctrl) {
+  Serial.println("disconnected");
+}
+void onValueChanged(XboxControlsState &s) {
+  Serial.printf("lstick: %.2f,%.2f, rstick: %.2f,%.2f\n",
+    s.leftStickX, s.leftStickY, s.rightStickX, s.rightStickY);
+}
 void setup() {
   Serial.begin(115200);
   Serial.setDebugOutput(true);
 
-   // Get deviceId
-  snprintf(ssid, 23, "MCUDEVICE-%llX", ESP.getEfuseMac());
-  WiFi.macAddress(macAddr);   // The MAC address is stored in the macAddr array.
-  snprintf(sMacAddr, 18, "%02x:%02x:%02x:%02x:%02x:%02x", macAddr[0], macAddr[1], macAddr[2], macAddr[3], macAddr[4], macAddr[5]);
-  Serial.println(ssid);
-  Serial.println(sMacAddr);
+  pAutoScan->onScanStarted(onScanStarted);
+  pAutoScan->onScanStopped(onScanStopped);
 
-  wifi_setup();
-  wifi_enable();
-
-  mqtt_setup();
-  mqtt_loop();
-
-  publish_alive();
+  controller.begin();
+  controller.onConnecting(onConnecting);
+  controller.onConnectionFailed(onConnectionFailed);
+  controller.onConnected(onConnected);
+  controller.onDisconnected(onDisconnected);
+  controller.onValueChanged(onValueChanged);
 
   delay(2000);
 
   setupEngine();
+
+
 }
 
 void loop()
 {
 
-  mqtt_loop();
   engine_loop();
-
-}
-
-void publish_alive() {
-
-  // maximum message length 128 Byte
-  String payload = "";
-  payload += "{\"device\":";
-  payload += "\"";
-  payload += ssid;
-  payload += "\"";
-  payload += ",\"type\":";
-  payload += "\"iamalive\"";
-  payload += ",\"mac\":";
-  payload += "\"";
-  payload += sMacAddr;
-  payload += "\"";
-  payload += "}";
-  sendMessage(mqttAliveTopic, payload.c_str());
-}
-
-void sendMessage(const char *topic, const char *outgoing) {
-  publishMQTTMessage(topic, outgoing);
-  Serial.println(outgoing);
+  delay(1000);
 }
